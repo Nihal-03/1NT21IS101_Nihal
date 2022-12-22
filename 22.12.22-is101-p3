@@ -1,0 +1,96 @@
+3 a.Design and implement for conversion of expression from one form to another form(infix to postfix). Demonstrate its working.
+
+AIM: Conversion of expression from infix to postfix
+
+ALGORITHM
+
+1. Start
+
+2. Scan the infix notation from left to right
+
+3. If the symbol scanned as an operand, print it as it is 
+
+4. If the symbol scanned as an operator, then 
+  (i) pop and print every operator on the stack that.
+    a) is above the most recently scanned left parenthesis and
+    b) has precedence higher than or is a right-associative operator of equal precedence to that of the new operator symbol
+(ii) push the new operator onto the stack. 
+
+5. If a right paranthesis to scanned, all operators down to the most recently scanned left parenthesis must be popped and printed. Futhermore, the pair of parentheses must be discarded. 
+
+6. After the full san, there may be operators in the stack. print all the operators until stack is empty
+
+7. stop.
+
+PROGRAM:
+
+//Conversion of an expression from infix to postfix expression
+#include<stdio.h>
+#include<ctype.h>
+
+char stack[25];
+int top = -1;
+
+void push(char x) //function to push an element to the stack
+{
+    stack[++top] = x;
+}
+
+char pop() //function to remove an element from the stack
+{
+    if(top == -1)
+        return -1;
+    else
+        return stack[top--];
+}
+
+int priority(char x)            // A utility function to return precedence of a given operator
+                                        // Higher returned value means
+{                                       // higher precedence
+    if(x == '(')
+        return 0;
+    if(x == '+' || x == '-')
+        return 1;
+    if(x == '*' || x == '/')
+        return 2;
+    return 0;
+}
+
+int main()
+{
+    char exp[35];
+    char *e, x;
+    printf("Enter the expression \n ");
+    scanf("%s",exp);
+    printf("\n");
+    e = exp;
+
+    while(*e != '\0') 
+    {
+        if(isalnum(*e))  // If the scanned character is an operand, print it
+            printf("%c ",*e);
+        else if(*e == '(') // If the scanned character is an ‘(‘, push it to the stack.
+            push(*e);
+        else if(*e == ')')  // If the scanned character is an ‘)’,
+                            // pop and output from the stack
+                             // until an ‘(‘ is encountered.
+        {
+            while((x = pop()) != '(')
+                printf("%c ", x);
+        } 
+        else  // an operator is encountered
+        {
+            while(priority(stack[top]) >= priority(*e))
+                printf("%c ",pop());
+            push(*e);
+        }
+        e++;
+    }
+
+    while(top != -1)    // pop all the operators from the stack
+    {
+        printf("%c ",pop());
+    }
+    return 0;
+    printf("\n");
+}
