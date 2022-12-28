@@ -1,0 +1,165 @@
+1 b. Design and implement a stack [linked list implementation] and demonstrate its working with necessary inputs. Display the appropriate messages in case of exceptions.
+
+AIM: Implementation of stack using linked list.
+
+ALGORITM:
+
+1) push() 
+
+Step 1: Start
+
+Step 2: Create a new node with the given data
+
+Step 3: check whether the stack is empty (head == NULL) 
+
+Step 4: If It is empty, then set the points of the node to NULL
+
+Step 5: else, then make the node point to head.
+
+Step 6: make the new node created as head
+
+Step 7: Stop
+
+2) pop() 
+
+Step 1: Start
+
+Step 2: Check whether stack is empty (head == NULL) 
+
+Step 3: If empty, then display  "EMPTY STACK"
+
+Step 4: else create a temporary node and set it to head 
+
+Step 5: Print the data of head
+
+Step 6: Make head to point to next node 
+
+step 7: Delete the temporary node. 
+
+Step 8:Stop
+
+3) Display ()
+
+step 1: start
+
+step 2: create a temporary node and initialize it with head pointer.
+
+Step 3: check of stack empty. If emply display " Stack is empty".
+
+Step 4: Else, traverse the temporary node till it encounter NULL.
+
+Step 5: Simultaneously print the value of the temporary node.
+
+Step 6: Stop
+
+
+PROGRAM
+//Implementation of stack using linked lists
+#include<stdio.h>
+#include<stdlib.h>
+void push();
+void pop();
+void display();
+
+struct node  // Structure to create a node with data and the next pointer
+{
+    int val;
+    struct node *next;
+};
+struct node *head;
+
+void push()        //function to push an element inside the stack
+{
+    int val;
+    struct node *ptr=(struct node *)malloc(sizeof(struct node));
+    if(ptr==NULL) 
+    {
+        printf("Not able to push the element");
+    } 
+    else 
+    {
+        printf("Enter the value\n");
+        scanf("%d",&val);
+        if(head==NULL) 
+        {
+            ptr->val=val;
+            ptr->next=NULL;
+            head=ptr;
+        } 
+        else 
+        {
+            ptr->val=val;
+            ptr->next=head;
+            head=ptr;
+        }
+        printf("Item pushed\n");
+    }
+}
+
+void pop()    //function to remove the element from the stack
+{
+    int item;
+    struct node *ptr;
+    if(head==NULL) 
+    {
+        printf("Underflow\n");
+    } 
+    else 
+    {
+        item=head->val;
+        ptr=head;
+        head=head->next;
+        free(ptr);
+        printf("Item popped %d\n",item);
+    }
+}
+
+
+void display()       // function to display the elements in the stack
+{
+    int i;
+    struct node *ptr;
+    ptr=head;
+    if(ptr==NULL) 
+    {
+        printf("Stack is empty\n");
+    } 
+    else 
+    {
+        printf("printing stack elements\n");
+        while(ptr!=NULL)
+        {
+            printf("%d\t",ptr->val);
+            printf("\n");
+            ptr=ptr->next;
+        }
+    }
+}
+
+int main()         // main where the execution starts
+{
+    int choice;
+    while(1) 
+    {
+        printf("Select the operation\n");
+        printf("1.push\n2.pop\n3.display\n4.exit\n");
+        scanf("%d",&choice);
+        switch(choice) 
+        {
+        case 1:
+            push();
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            exit(0);
+        default:
+            printf("Invalid choice\n");
+
+        }
+    }
+}
