@@ -1,35 +1,28 @@
-// binary search
 #include<stdio.h>
-int bs(int a[],int x,int l, int h)
+int binarysearch(int arr[],int x,int low,int high) 
 {
-  if(h>=1)
-  {
-     int mid=1+(h-1)/2;
-     if(a[mid]==x)
-     {
-       return mid;
-     }
-     if(a[mid]>x)
-     {
-     return bs(a,x,l,mid-1);
-     return bs(a,x,mid+1,h);
-     }
-     return -1;
-  }
+	if(high>=low) //high should be greater than low
+	{
+		int mid=low+(high-low)/2; //mid=(low+high)/2
+		if(arr[mid]==x)  //if element=arr[mid]
+			return mid;  //element if found at mid
+		else if(arr[mid]>x)  //if element is less than mid value
+			return binarysearch(arr,x,low,mid-1);  // seacrh element from low to mid-1
+		else 
+			return binarysearch(arr,x,mid+1,high); //search element from mid+1 to high
+	}
+	return -1; //if low>high return -1
 }
 
-int main(void)
+int main(void)  //main function
+
 {
-  int a[]={3,4,5,6,7,8,9};
-  int n=sizeof(a)/sizeof(a[0]);
-  int x=4;
-  int r=bs(a,x,0,n-1);
-  if(r==-1)
-  {
-    printf("not found");
-  }
-  else
-  {
-    printf("element is found at index of %d",r);
-  }    
-   }  
+	int arr[]={3,4,5,6,7,8,9};   //initializing array in sorted manner
+	int n=sizeof(arr)/sizeof(arr[0]);   //n=last index of the array
+	int x=4;
+	int result=binarysearch(arr,x,0,n-1);   //low=0 high=n-1
+	if(result==-1)
+		printf("Element not found");   //if element is not found
+	else
+		printf("Element is found at index %d",result);   //print the index of the array where the element is found
+}
