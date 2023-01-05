@@ -1,0 +1,35 @@
+// binary search
+#include<stdio.h>
+int bs(int a[],int x,int l, int h)
+{
+  if(h>=1)
+  {
+     int mid=1+(h-1)/2;
+     if(a[mid]==x)
+     {
+       return mid;
+     }
+     if(a[mid]>x)
+     {
+     return bs(a,x,l,mid-1);
+     return bs(a,x,mid+1,h);
+     }
+     return -1;
+  }
+}
+
+int main(void)
+{
+  int a[]={3,4,5,6,7,8,9};
+  int n=sizeof(a)/sizeof(a[0]);
+  int x=4;
+  int r=bs(a,x,0,n-1);
+  if(r==-1)
+  {
+    printf("not found");
+  }
+  else
+  {
+    printf("element is found at index of %d",r);
+  }    
+   }  
